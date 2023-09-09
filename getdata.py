@@ -10,16 +10,16 @@ def getData_FwdPrice(cs,configpath):
     cur1 = con1.cursor()
 
     curvename = 'ICE_WIM'
-    query1 = "Select * from FMS9_FORWARD2_PRICE_DTL where ENT_DT = to_date('08-05-2023','dd/mm/yyyy') and CURVE_NM = '"+ curvename + "' order by curve_dd_mm_yr asc"
-    #query = "Select Distinct curve_nm from FMS9_FORWARD2_PRICE_DTL where ENT_DT = to_date('08-05-2023','dd/mm/yyyy')"
+    query1 = "Select * from FMS9_FORWARD2_PRICE_DTL where ENT_DT = to_date('08-05-2023','dd/mm/yyyy')  order by curve_dd_mm_yr asc"
+    #query1 = "Select Distinct curve_nm from FMS9_FORWARD2_PRICE_DTL where ENT_DT = to_date('08-05-2023','dd/mm/yyyy')"
 
     data = pd.DataFrame(cur1.execute(query1).fetchall())
-    data.rename(columns = {0:'Curve_Date', 1:'Curve_Name', 2:'Commodity_Type', 
+    data.rename(columns = {0:'Curve Date', 1:'Curve Name', 2:'Commodity_Type', 
                         3:'Curve_Type', 4:'Curve_Unit', 5:'Phys_Fin', 
                         6:'Price', 7:'Ent_by', 8:'Ent_Date', 
                         9:'Aprv_by', 10:'Aprv_Date', 11: 'Flag'}, inplace=True)
     #print(data)
-    vizdata_fwd = data.filter(['Curve_Date', 'Curve_Name', 'Price'])
+    vizdata_fwd = data.filter(['Curve Date', 'Curve Name', 'Price'])
     #print(vizdata_fwd)
     
     cur1.close()
@@ -34,32 +34,28 @@ def getData_SettPrice(cs,configpath) :
     cur2 = con2.cursor()
 
     curvename = 'PLATTS_JKM'
-    query2 = "Select * from FMS9_CURVE2_PRICE_DTL where  ENT_DT >= to_date('01-01-2021','dd/mm/yyyy') and CURVE_NM = '"+ curvename + "' order by curve_dd_mm_yr asc"
+    query2 = "Select curve_dd_mm_yr, curve_nm, phys_fin, settle_price from FMS9_CURVE2_PRICE_DTL where ENT_DT >= to_date('01-01-2021','dd/mm/yyyy') and CURVE_NM = '"+ curvename + "' order by curve_dd_mm_yr asc"
 
     data = pd.DataFrame(cur2.execute(query2).fetchall())
-    print(data)
-    data.rename(columns = {0:'Curve Date', 1:'Curve_Name', 2:'Commodity_Type', 
-                        3:'Curve_Type', 4:'Curve_Unit', 5:'Phys_Fin', 
-                        6:'Price', 7:'Ent_by', 8:'Ent_Date', 
-                        9:'Aprv_by', 10:'Aprv_Date', 11: 'Flag'}, inplace=True)
     #print(data)
-    vizdata_stl = data.filter(['Curve Date', 'Curve_Name', 'Price'])
-    print(vizdata_stl)
-    
+    data.rename(columns = {0:'Curve Date', 1:'Curve Name', 2:'Phys_Fin', 
+                        3:'Price'}, inplace=True)
+    print(data)
+        
     cur2.close()
     con2.close()
-    return vizdata_stl
+    
+    return data
 
 
 if __name__ == '__main__':
     print("getdata_v3.py script has been called")
-    """ora.init_oracle_client()
-    configpath = "C:\oraclexe\app\oracle\product\11.2.0\server\network\ADMIN"
-    cs = "Soham-DellG15:1521/XE"
-    cs = ''
-    configpath = ''
-    fwddata = getData_FwdPrice(cs, configpath)
-    stldata = getData_SettPrice(cs, configpath)
+    #ora.init_oracle_client()
+    #configpath = "C:\oraclexe\app\oracle\product\11.2.0\server\network\ADMIN"
+    #cs = "Soham-DellG15:1521/XE"
+    #cs = "117.248.251.123:1521/XE"
+    #fwddata = getData_FwdPrice(cs, configpath)
+    #stldata = getData_SettPrice(cs, configpath)
     #print(fwddata)
-    #print(stldata)"""
+    #print(stldata)
     print("getdata_v3.py script is running fine")
