@@ -228,18 +228,19 @@ def getData_SpotStartEndDate():
 
     return startdate, today
 
-
+"""
 if __name__ == '__main__':
     print("getdata_v9.py script has been called")
-    ora.init_oracle_client()
-    configpath = "C:\oraclexe\app\oracle\product\11.2.0\server\network\ADMIN"
-    cs = "Soham-DellG15:1521/XE"
+    #ora.init_oracle_client()
+    #configpath = "C:\oraclexe\app\oracle\product\11.2.0\server\network\ADMIN"
+    #cs = "Soham-DellG15:1521/XE"
     #cs = "117.248.251.123:1521/XE"
     #fwddata = getData_FwdPrice(cs, configpath, "ICE_WIM", "None", "All")
     #stldata = getData_SettPrice(cs, configpath)
-    sptcname = getData_DistinctSpotCurveName(cs, configpath)
+    #sptcname = getData_DistinctSpotCurveName(cs, configpath)
     #print(fwddata)
     #print(stldata)
-    print(sptcname)
+    #print(sptcname)
     #getData_DistinctEntDate(cs, configpath)
     print("getdata_v9.py script is running fine")
+"""
