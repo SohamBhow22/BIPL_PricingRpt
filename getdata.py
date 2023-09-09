@@ -1,3 +1,4 @@
+#Python Libraries used
 import oracledb as ora
 from datetime import datetime, date
 import pandas as pd
@@ -49,30 +50,21 @@ def getData_FwdPrice(curvenm, entdt, physfin):
 
     return data
 
-def getData_SettPrice(curvename, startdt, enddt, physfin) :
+def getData_SettPrice(startdt, enddt, fincurve) :
     #SettlementPricing
-    print("Currently within getData_SettPrice function in getdata_v8.py file")
+    print("Currently within getData_SettPrice function in getdata_v9.py file")
     con2 = getOraDBConnection()
     #con2 = ora.connect(user="FMS8TEST", password="FMS8TEST", dsn=cs, config_dir=configpath)
     #con2 = ora.connect(user="fms8", password="fms8", dsn=cs, config_dir=configpath)
     cur2 = con2.cursor()
 
     #curvename = 'PLATTS_JKM'
-    print(physfin)
-    if physfin == "All":
-        query2 = """Select CURVE_DD_MM_YR, CURVE_NM, PHYS_FIN, SETTLE_PRICE 
+    print(fincurve)
+    query2 = """Select CURVE_DD_MM_YR, CURVE_NM, PHYS_FIN, SETTLE_PRICE 
                 from FMS9_CURVE2_PRICE_DTL 
                 where ENT_DT >= to_date('""" +startdt.strftime("%d/%m/%Y")+ """','dd/mm/yyyy')
                 and ENT_DT <= to_date('""" +enddt.strftime("%d/%m/%Y")+ """','dd/mm/yyyy') 
-                and CURVE_NM like '"""+ curvename + """'
-                order by ENT_DT, CURVE_DD_MM_YR desc, CURVE_NM"""
-    else:    
-        query2 = """Select CURVE_DD_MM_YR, CURVE_NM, PHYS_FIN, SETTLE_PRICE 
-                from FMS9_CURVE2_PRICE_DTL 
-                where ENT_DT >= to_date('""" +startdt.strftime("%d/%m/%Y")+ """','dd/mm/yyyy')
-                and ENT_DT <= to_date('""" +enddt.strftime("%d/%m/%Y")+ """','dd/mm/yyyy') 
-                and CURVE_NM like '"""+ curvename + """'
-                and PHYS_FIN like '"""+ physfin + """' 
+                and PHYS_FIN like '"""+ fincurve + """' 
                 order by ENT_DT, CURVE_DD_MM_YR desc, CURVE_NM"""
 
     #print(query2)
@@ -84,7 +76,7 @@ def getData_SettPrice(curvename, startdt, enddt, physfin) :
         
     cur2.close()
     con2.close()
-    print("Exiting getData_SettPrice function in getdata_v8.py file")
+    print("Exiting getData_SettPrice function in getdata_v9.py file")
     
     return data
 
@@ -94,7 +86,7 @@ def getData_DistinctFwdEntDate():
     #con3 = ora.connect(user="FMS8TEST", password="FMS8TEST", dsn=cs, config_dir=configpath)
     cur3 = con3.cursor()
 
-    print("Currently within getData_DistinctFwdEntDate function in getdata_v8.py file")
+    print("Currently within getData_DistinctFwdEntDate function in getdata_v9.py file")
 
     currdatetime = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
     print(currdatetime)
@@ -110,7 +102,7 @@ def getData_DistinctFwdEntDate():
     cur3.close()
     con3.close()
 
-    print("Exiting getData_DistinctFwdEntDate function in getdata_v8.py file")
+    print("Exiting getData_DistinctFwdEntDate function in getdata_v9.py file")
 
     return entdt
 
@@ -120,7 +112,7 @@ def getData_DistinctFwdCurveName():
     #con4 = ora.connect(user="FMS8TEST", password="FMS8TEST", dsn=cs, config_dir=configpath)
     cur4 = con4.cursor()
 
-    print("Currently within getData_DistinctFwdCurveName function in getdata_v8.py file") 
+    print("Currently within getData_DistinctFwdCurveName function in getdata_v9.py file") 
 
     query4 = """SELECT DISTINCT CURVE_NM 
                 FROM FMS9_FORWARD2_PRICE_DTL 
@@ -137,7 +129,7 @@ def getData_DistinctFwdCurveName():
     cur4.close()
     con4.close()
 
-    print("Exiting getData_DistinctFwdCurveName function in getdata_v8.py file")
+    print("Exiting getData_DistinctFwdCurveName function in getdata_v9.py file")
 
     return fwdcurvenames
 
@@ -147,7 +139,7 @@ def getData_DistinctFwdPhysFin():
     #con5 = ora.connect(user="FMS8TEST", password="FMS8TEST", dsn=cs, config_dir=configpath)
     cur5 = con5.cursor()
 
-    print("Currently within getData_DistinctFwdPhysFin function in getdata_v8.py file") 
+    print("Currently within getData_DistinctFwdPhysFin function in getdata_v9.py file") 
 
     query5 = """SELECT DISTINCT PHYS_FIN 
                 FROM FMS9_FORWARD2_PRICE_DTL 
@@ -164,7 +156,7 @@ def getData_DistinctFwdPhysFin():
     cur5.close()
     con5.close()
 
-    print("Exiting getData_DistinctFwdPhysFin function in getdata_v8.py file")
+    print("Exiting getData_DistinctFwdPhysFin function in getdata_v9.py file")
 
     return physfin
 
@@ -174,7 +166,7 @@ def getData_DistinctSpotCurveName():
     #con6 = ora.connect(user="FMS8TEST", password="FMS8TEST", dsn=cs, config_dir=configpath)
     cur6 = con6.cursor()
 
-    print("Currently within getData_DistinctSpotCurveName function in getdata_v8.py file") 
+    print("Currently within getData_DistinctSpotCurveName function in getdata_v9.py file") 
 
     query6 = """SELECT DISTINCT CURVE_NM
                 FROM FMS9_CURVE2_PRICE_DTL
@@ -190,7 +182,7 @@ def getData_DistinctSpotCurveName():
     cur6.close()
     con6.close()
 
-    print("Exiting getData_DistinctSpotCurveName function in getdata_v8.py file")
+    print("Exiting getData_DistinctSpotCurveName function in getdata_v9.py file")
 
     return spotcurvenames
 
@@ -200,7 +192,7 @@ def getData_DistinctSpotFinCurve():
     #con5 = ora.connect(user="FMS8TEST", password="FMS8TEST", dsn=cs, config_dir=configpath)
     cur7 = con7.cursor()
 
-    print("Currently within getData_DistinctSpotFinCurve function in getdata_v8.py file") 
+    print("Currently within getData_DistinctSpotFinCurve function in getdata_v9.py file") 
 
     query7 = """SELECT DISTINCT PHYS_FIN 
                 FROM FMS9_CURVE2_PRICE_DTL 
@@ -210,7 +202,7 @@ def getData_DistinctSpotFinCurve():
     physfin = pd.DataFrame(cur7.execute(query7).fetchall()) 
     
     #Adding "All" to the list of Report Dates
-    physfin.loc[-1] = ["All"]
+    physfin.loc[-1] = ["--Select--"]
     physfin.index = physfin.index + 1  #shifting indexes back to normal #this line can be commented out but we are doing to ensure the index begins from 0 again 
     physfin = physfin.sort_index()
     print(physfin)
@@ -218,27 +210,27 @@ def getData_DistinctSpotFinCurve():
     cur7.close()
     con7.close()
 
-    print("Exiting getData_DistinctSpotFinCurve function in getdata_v8.py file")
+    print("Exiting getData_DistinctSpotFinCurve function in getdata_v9.py file")
 
     return physfin
 
 def getData_SpotStartEndDate():
     #Default Start Date will be 1st of current month and End Date will be today's date
     #We are asking the user to select the date range for which they need the Spot data
-    print("Currently within getData_SpotStartEndDate function in getdata_v8.py file") 
+    print("Currently within getData_SpotStartEndDate function in getdata_v9.py file") 
     startdate =  date(datetime.now().year, datetime.now().month, 1)
     #startdate =  date(2023, 8, 1)
     print(startdate)
     today = date.today()
     print(today) 
 
-    print("Exiting getData_SpotStartEndDate function in getdata_v8.py file")
+    print("Exiting getData_SpotStartEndDate function in getdata_v9.py file")
 
     return startdate, today
 
 
 if __name__ == '__main__':
-    print("getdata_v8.py script has been called")
+    print("getdata_v9.py script has been called")
     ora.init_oracle_client()
     configpath = "C:\oraclexe\app\oracle\product\11.2.0\server\network\ADMIN"
     cs = "Soham-DellG15:1521/XE"
@@ -250,4 +242,4 @@ if __name__ == '__main__':
     #print(stldata)
     print(sptcname)
     #getData_DistinctEntDate(cs, configpath)
-    print("getdata_v8.py script is running fine")
+    print("getdata_v9.py script is running fine")
