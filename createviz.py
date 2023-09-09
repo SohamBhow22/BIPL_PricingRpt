@@ -1,4 +1,3 @@
-import getdata_v4
 import getdata_v5
 
 import oracledb as ora
@@ -16,11 +15,11 @@ def createviz(pricingname, data):
 if __name__ == '__main__':
     #print()
     ora.init_oracle_client()
-    #cs = "localhost:1521/XE"
-    cs = "117.248.251.123:1521/XE"
+    cs = "localhost:1521/XE"
+    #cs = "117.248.251.123:1521/XE"
     configpath = "C:\oraclexe\app\oracle\product\11.2.0\server\network\ADMIN"
-    fwddata = getdata_v4.getData_FwdPrice(cs, configpath) #works
-    #setldata = getdata_v4.getData_SettPrice(cs, configpath) #works
+    fwddata = getdata_v5.getData_FwdPrice(cs, configpath) #works
+    #setldata = getdata_v5.getData_SettPrice(cs, configpath) #works
     #print(fwddata)
     #print(setldata)
     #dt = getdata_v5.getData_DistinctEntDate(cs, configpath)
