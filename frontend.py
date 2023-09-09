@@ -1,5 +1,5 @@
 #Files to be imported and used
-import getdata_v9
+import getdata_v10
 #import createviz_v5
 
 #Python Libraries used
@@ -14,12 +14,12 @@ st.title("Pricing Data Visualizations")
 tab1, tab2 = st.tabs(["Forward Pricing", "Settlement(Spot) Pricing"])
 
 
-fwddates = getdata_v9.getData_DistinctFwdEntDate()
-fwdcnames = getdata_v9.getData_DistinctFwdCurveName()
-fwdphysfin = getdata_v9.getData_DistinctFwdPhysFin()
-sptcnames = getdata_v9.getData_DistinctSpotCurveName()
-sptfincurve = getdata_v9.getData_DistinctSpotFinCurve()
-stdt, enddt = getdata_v9.getData_SpotStartEndDate()
+fwddates = getdata_v10.getData_DistinctFwdEntDate()
+fwdcnames = getdata_v10.getData_DistinctFwdCurveName()
+fwdphysfin = getdata_v10.getData_DistinctFwdPhysFin()
+sptcnames = getdata_v10.getData_DistinctSpotCurveName()
+sptfincurve = getdata_v10.getData_DistinctSpotFinCurve()
+stdt, enddt = getdata_v10.getData_SpotStartEndDate()
 
 
 with tab1:
@@ -43,7 +43,7 @@ with tab1:
                 st.error("Please select the Curve Name and the Date you want the graph to be generated from", icon="🚨")
             elif(fwdcurvename != "All" and fwddate != "None"):
                 #st.write("Graph for ", fwdcurvename, "Noice")
-                data = getdata_v9.getData_FwdPrice(fwdcurvename, fwddate, fphysfin)
+                data = getdata_v10.getData_FwdPrice(fwdcurvename, fwddate, fphysfin)
                 graph_data = data.filter(['Curve Date', 'Price'])
                 print(graph_data)
                 if not graph_data.empty:
@@ -52,7 +52,7 @@ with tab1:
                     st.toast('This is a success message!', icon="✅")
                 else:
                     st.error("No data available for the selected Curve name and Date", icon="🚨")
-                #st.write("getdata_v9.getData_FwdPrice has been called")
+                #st.write("getdata_v10.getData_FwdPrice has been called")
    
 
 with tab2:
@@ -73,7 +73,7 @@ with tab2:
             if(fincurve == "--Select--"):
                 st.error("Please select a Settlement Financial Curve", icon="🚨")
             else:
-                data = getdata_v9.getData_SettPrice(startdate, enddate, fincurve)
+                data = getdata_v10.getData_SettPrice(startdate, enddate, fincurve)
                 graph_data = data.filter(['Curve Date', 'Price'])
                 print(graph_data)
                 if not graph_data.empty:
@@ -82,4 +82,4 @@ with tab2:
                     st.toast('This is a success message!', icon="✅") 
                 else:
                     st.error("No data available for the selected Curve Name and Date Range", icon="🚨")
-                #st.write("getdata_v9.getData_SettPrice has been called")
+                #st.write("getdata_v10.getData_SettPrice has been called")
