@@ -3,14 +3,24 @@ from datetime import datetime
 import pandas as pd
 ## import db_config
 
-def getData_FwdPrice(cs,configpath):
+def getData_FwdPrice(cs,configpath, curvenm, rptdt, phyfin):
     #ForwardPricing
     con1 = ora.connect(user="FMS8TEST", password="FMS8TEST", dsn=cs, config_dir=configpath)
     cur1 = con1.cursor()
 
-    curvename = 'ICE_WIM'
-    query1 = "Select curve_dd_mm_yr, curve_nm, phys_fin, settle_price, ent_dt from FMS9_FORWARD2_PRICE_DTL where ENT_DT = to_date('08-05-2023','dd/mm/yyyy') order by curve_dd_mm_yr asc"
-    #query = "Select Distinct curve_nm from FMS9_FORWARD2_PRICE_DTL where ENT_DT = to_date('08-05-2023','dd/mm/yyyy')"
+    """print(curvenm)
+    print(rptdt)
+    print(phyfin)"""
+
+    #curvename = 'ICE_WIM'
+
+    
+    query1 = """Select curve_dd_mm_yr, curve_nm, phys_fin, settle_price, ent_dt 
+            from FMS9_FORWARD2_PRICE_DTL 
+            where ENT_DT <= to_date('08-05-2023','dd/mm/yyyy') 
+            and curve_nm = '"""+curvenm+"""' 
+            order by curve_dd_mm_yr asc"""
+    #query1 = "Select Distinct curve_nm from FMS9_FORWARD2_PRICE_DTL where ENT_DT = to_date('08-05-2023','dd/mm/yyyy')"
 
     data = pd.DataFrame(cur1.execute(query1).fetchall())
     #print(data)
@@ -108,14 +118,14 @@ def getData_DistinctPhysFin(cs, configpath):
 
 
 if __name__ == '__main__':
-    print("getdata_v3.py script has been called")
-    #ora.init_oracle_client()
-    #configpath = "C:\oraclexe\app\oracle\product\11.2.0\server\network\ADMIN"
-    #cs = "Soham-DellG15:1521/XE"
+    print("getdata_v6.py script has been called")
+    ora.init_oracle_client()
+    configpath = "C:\oraclexe\app\oracle\product\11.2.0\server\network\ADMIN"
+    cs = "Soham-DellG15:1521/XE"
     #cs = "117.248.251.123:1521/XE"
-    #fwddata = getData_FwdPrice(cs, configpath)
+    fwddata = getData_FwdPrice(cs, configpath, "ICE_WIM", "None", "All")
     #stldata = getData_SettPrice(cs, configpath)
-    #print(fwddata)
+    print(fwddata)
     #print(stldata)
     #getData_DistinctEntDate(cs, configpath)
-    print("getdata_v3.py script is running fine")
+    print("getdata_v6.py script is running fine")
