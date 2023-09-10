@@ -25,13 +25,13 @@ stdt, enddt = getdata_v10.getData_SpotStartEndDate()
 with tab1:
     with st.container():
         fwdcurvename = st.selectbox("Curve Names: (mandatory)", fwdcnames)
-        st.write("Curve Name selected is: ", fwdcurvename)
+        #st.write("Curve Name selected is: ", fwdcurvename)
 
         fwddate = st.selectbox("Report Date: (mandatory)", fwddates)
-        st.write("Report Date Selected is: ", fwddate)    
+        #st.write("Report Date Selected is: ", fwddate)    
 
         fphysfin = st.selectbox("Physical_Financial: (not mandatory)", fwdphysfin)
-        st.write("Physical_Financial Curve Name selected is: ", fphysfin)
+        #st.write("Physical_Financial Curve Name selected is: ", fphysfin)
 
         if (st.button("Generate Graph", key='gengraph1', use_container_width=False)):
             #st.write("Hello")
